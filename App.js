@@ -4,16 +4,15 @@ import React, { useEffect, useMemo, useReducer } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, View } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as SecureStore from 'expo-secure-store';
 
 
-import  Check_in_Screen from './components/checkInScreen/Check_in_Screen';
-import  Scan_Screen from './components/scanAndResultScreen/Scan_Screen';
-import  Scan_Valid_Screen from './components/scanAndResultScreen/Scan_Valid_Screen';
-import  Scan_Non_Valid_Screen from './components/scanAndResultScreen/Scan_Non_Valid_Screen';
+import  CheckInScreen from './components/checkInScreen/CheckInScreen';
+import  ScanScreen from './components/scanAndResultScreen/ScanScreen';
+import  ScanValidScreen from './components/scanAndResultScreen/ScanValidScreen';
+import  ScanNonValidScreen from './components/scanAndResultScreen/ScanNonValidScreen';
 import  AuthContext  from './context'
 
 //AUTH SCREENS
@@ -52,11 +51,11 @@ function Home() {
         
         <Tab.Screen 
               name="Scanner" 
-              component={Scan_Screen} 
+              component={ScanScreen} 
               options={{
                 headerShown: false
               }}/>
-        <Tab.Screen name="Invités" component={Check_in_Screen} />
+        <Tab.Screen name="Invités" component={CheckInScreen} />
     </Tab.Navigator>
   );
 }
@@ -143,8 +142,8 @@ function App() {
           !state.userToken ? (
           <Stack.Navigator initialRouteName="Home">          
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-            <Stack.Screen name="Scan_Valid" component={Scan_Valid_Screen} />
-            <Stack.Screen name="Scan_Non_Valid" component={Scan_Non_Valid_Screen} />
+            <Stack.Screen name="Scan_Valid" component={ScanValidScreen} />
+            <Stack.Screen name="Scan_Non_Valid" component={ScanNonValidScreen} />
           </Stack.Navigator>
           ) :
            (

@@ -19,7 +19,7 @@ const AVATAR_SIZE = 70;
 const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 
-function Check_in_Screen({ navigation ,route }) {
+function CheckInScreen({ navigation ,route }) {
 
   const [guestList, setGuestList] = useState([])
   var { guest } = route.params ? route.params : {guest : {id: -1}};
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Check_in_Screen;
+export default CheckInScreen;

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Button } from 'react-native';
 
 
-function Scan_Valid_Screen({ navigation ,route}) {
+function ScanValidScreen({ navigation ,route}) {
     /* 2. Get the param */
   const { guest }  = route.params;
 
@@ -28,4 +28,4 @@ function Scan_Valid_Screen({ navigation ,route}) {
   )
 }
 
-export default Scan_Valid_Screen
+export default ScanValidScreen

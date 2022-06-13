@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useIsFocused } from '@react-navigation/native';
 
-function Scan_Screen({navigation}) {
+function ScanScreen({navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default Scan_Screen
+export default ScanScreen
