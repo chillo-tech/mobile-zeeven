@@ -21,14 +21,13 @@ function Scan_Screen({navigation}) {
 
    //Temporary QR-CODE Validation Functionality      
 
-  const checkValidQR = () => {   
+  const checkValidQR = (guest) => {   
     try {
       const validID = [ 1, 2, 3, 4]
-      let valid = (validID.includes(idScan))
+      let valid = (validID.includes(guest.id))
 
       if(valid){
-        setScanned(false)
-        navigation.navigate("Scan_Valid", {})
+        navigation.navigate("Scan_Valid", {guest})
       }else{
         navigation.navigate("Scan_Non_Valid")
       }
@@ -44,24 +43,15 @@ function Scan_Screen({navigation}) {
     askForCameraPermission();
   }, []);
 
-  useFocusEffect(()=>{
-    navigation.navigate('Home', {
-      screen: 'Scanner',
-      initial: true,
-    });
-    
-  });
+  
 
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setText(data);
 
-    alert(`Data ${data} has been scanned!`);
-    //var formatJson0 = JSON.parse(data)   
-   // console.log(formatJson0)  
-    formatJSon(data);
-    checkValidQR();  
+    alert(`${data}`);
+    checkValidQR(formatJSon(data));  
   };
 
 
@@ -69,9 +59,7 @@ function Scan_Screen({navigation}) {
     var qr_json;
     try {
       qr_json =  JSON.parse(qr_scan)
-      console.log("id est: " + qr_json.id)
-     
-      console.log("Id Scan: "+  idScan)
+      return qr_json
     }catch(error){
       console.log("Erreur " + error)
     }
