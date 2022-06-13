@@ -14,82 +14,43 @@ import {
 
 
 const { width, height } = Dimensions.get('screen');
-/*
-faker.seed(10);
-
-const DATA = [...Array(30).keys()].map((_, i) => {
-  return {
-    key: faker.random.uuid(),
-    image: ``,
-    name: faker.name.findName(),
-    jobTitle: faker.name.jobTitle(),
-    email: faker.internet.email(),
-  };
-});
-
-const BG_IMG = `https://images.pexels.com/photos/1231265/pexels-photo-1231265.jpeg?`
-
-
-*/
 const SPACING = 20;
 const AVATAR_SIZE = 70;
 const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d7a',
-    title: 'Third Item',
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28b',
-    title: 'fourth Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f6',
-    title: 'fifth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d7',
-    title: 'seven Item',
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb',
-    title: 'eight Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fb',
-    title: 'ninth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571',
-    title: 'tentnrh Item',
-  },
-];
 
-function Check_in_Screen({ navigation ,route}) {
+function Check_in_Screen({ navigation ,route }) {
 
   const [guestList, setGuestList] = useState([])
-  var { guest } = route.params;
+  var { guest } = route.params ? route.params : {guest : {id: -1}};
 
 
- 
- 
+  if(guest.id == null){
+    <Text>LIST empty</Text>
+  }
+    
 
   useEffect(() => {
-    setGuestList(oldGuest => [...oldGuest, guest])
-  }, []);
+    if(guest.id == -1){
+      
+    }else if(!alreadyCheckIn(guest)){
+      setGuestList(oldGuest => [...oldGuest, guest])
+    console.log(guestList)
 
+    }else{
+      alert(`Cet invite a deja ete Check IN`);
+    }
+    
+  }, [guest]);
+
+
+  const alreadyCheckIn = (guest) => {
+      let guestId = guest.id;
+      return guestList.some(item => item.id === guestId)
+  }
 
 return (
-    <View style={{ flex: 1, backgroundColor: '#fff'}}>
+    <View style={{ flex: 1, backgroundColor: '#fff'}}> 
       <FlatList
         data={guestList}
         keyExtractor={item => item.id}
@@ -112,6 +73,8 @@ return (
           )
         }}
       />
+       
+      
     </View>
   )
 }
