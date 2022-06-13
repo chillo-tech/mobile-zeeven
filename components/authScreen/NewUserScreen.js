@@ -12,6 +12,7 @@ export default function NewUserScreen() {
 
   const submit = () => {
 
+    setEmail(email.trim())
     if (validateEmail(email)) {
       console.log('New User Valid')
       signIn({name, email})

@@ -21,14 +21,11 @@ import  PhoneAuthScreen from './components/authScreen/PhoneAuthScreen'
 import  NewUserScreen from './components/authScreen/NewUserScreen'
 import  SecretCodeScreen from './components/authScreen/SecretCodeScreen'
 
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
 function Home() {
-
-  
   return (
     <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -66,6 +63,7 @@ function Home() {
 
 
 function App() {
+
 
   const [state, dispatch] = useReducer(
     (prevState, action) => {
@@ -110,11 +108,6 @@ function App() {
       } catch (e) {
         console.log("No USER CONNECTED")
       }
-
-      // After restoring token, we may need to validate it in production apps
-
-      // This will switch to the App screen or Auth screen and this loading
-      // screen will be unmounted and thrown away.
     };
 
     bootstrapAsync();
@@ -123,9 +116,7 @@ function App() {
   const authContext = useMemo(
     () => ({
       signIn: async (data) => {
-        
         dispatch({ type: 'SIGN_IN', token: data  });     
-      
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async (data) => {
@@ -155,13 +146,15 @@ function App() {
             <Stack.Screen name="Scan_Valid" component={Scan_Valid_Screen} />
             <Stack.Screen name="Scan_Non_Valid" component={Scan_Non_Valid_Screen} />
           </Stack.Navigator>
-          ) : (
+          ) :
+           (
             <Stack.Navigator initialRouteName="Numero AUTH">
               <Stack.Screen name="Numero AUTH" component={ PhoneAuthScreen } />
               <Stack.Screen name="Secret Code" component={ SecretCodeScreen } />
               <Stack.Screen name="New User"    component={ NewUserScreen } />
             </Stack.Navigator>
           )
+          
         }
       </NavigationContainer>
     </AuthContext.Provider>
