@@ -148,32 +148,18 @@ function App() {
 
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-
-        {state.isLoading ? (
-            <View>
-                <Text>loading</Text>
-            </View>
-          ) :
-          state.userToken ? (
+        {
+          !state.userToken ? (
           <Stack.Navigator initialRouteName="Home">          
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen 
-                name="Scan_Valid"
-                component={Scan_Valid_Screen} />
-            <Stack.Screen 
-                name="Scan_Non_Valid" 
-                component={Scan_Non_Valid_Screen} />
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+            <Stack.Screen name="Scan_Valid" component={Scan_Valid_Screen} />
+            <Stack.Screen name="Scan_Non_Valid" component={Scan_Non_Valid_Screen} />
           </Stack.Navigator>
           ) : (
             <Stack.Navigator initialRouteName="Numero AUTH">
               <Stack.Screen name="Numero AUTH" component={ PhoneAuthScreen } />
               <Stack.Screen name="Secret Code" component={ SecretCodeScreen } />
               <Stack.Screen name="New User"    component={ NewUserScreen } />
-
             </Stack.Navigator>
           )
         }

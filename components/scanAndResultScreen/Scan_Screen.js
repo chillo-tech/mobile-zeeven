@@ -2,111 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useFocusEffect } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
 function Scan_Screen({navigation}) {
-
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState('NO QR CODE FOUND');
-  const [idScan, setIdScan] = useState(1)
 
-  const askForCameraPermission = () => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status == 'granted')
-    })()
-  }
+  console.log(hasPermission, scanned);
+  const isFocused = useIsFocused();
 
- 
-
-   //Temporary QR-CODE Validation Functionality      
-
-  const checkValidQR = () => {   
-    try {
-      const validID = [ 1, 2, 3, 4]
-      let valid = (validID.includes(idScan))
-
-      if(valid){
-        setScanned(false)
-        navigation.navigate("Scan_Valid", {})
-      }else{
-        navigation.navigate("Scan_Non_Valid")
-      }
-
-      
-    } catch (error) {
-      console.error("Erreur: " + error);
-    }       
-  }
-
-  //Request for camera permission 
   useEffect(() => {
-    askForCameraPermission();
+    (async () => {
+      setScanned(false);
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
   }, []);
-
-  useFocusEffect(()=>{
-    navigation.navigate('Home', {
-      screen: 'Scanner',
-      initial: true,
-    });
-    
-  });
-
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    setText(data);
-
-    alert(`Data ${data} has been scanned!`);
-    //var formatJson0 = JSON.parse(data)   
-   // console.log(formatJson0)  
-    formatJSon(data);
-    checkValidQR();  
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
-
-  const formatJSon = (qr_scan) =>{
-    var qr_json;
-    try {
-      qr_json =  JSON.parse(qr_scan)
-      console.log("id est: " + qr_json.id)
-     
-      console.log("Id Scan: "+  idScan)
-    }catch(error){
-      console.log("Erreur " + error)
-    }
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
   }
-
-  //Check permission and return the screens 
-  if(hasPermission === null){
-    return (
-      <View style={styles.container}>
-        <Text>Demande permision a la camera</Text>
-      </View>
-    )
-  }else if (hasPermission === false){
-    return (
-      <View style={styles.container}>
-        <Text style={{margin: 10}}>No acces to camera</Text>
-        <Button title={'Allow Camera'} onPress={() => askForCameraPermission()}/>
-      </View>
-    )
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
   }
 
   return (
-    <View style={styles.container}>     
-      <View style={styles.barcodebox}>
-        <BarCodeScanner 
+    <View style={styles.container}>
+      {isFocused ? (
+        <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{height: 770, width: 600}}
+          style={StyleSheet.absoluteFillObject}
         />
-      </View>
-     
+      ) : null}
       {scanned && (
-          <Button title={'Scan again'} 
-                  onPress={() => setScanned(false)}
-          />)
-      }
+        <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
+      )}
     </View>
   );
 }
