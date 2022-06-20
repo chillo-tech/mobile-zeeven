@@ -1,10 +1,11 @@
 import React , { useState,  useContext } from 'react'
 import { Button,  TextInput, StyleSheet, View } from 'react-native';
-import AuthContext from '../../context';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
 
-export default function NewUserScreen() {
 
-  const { signIn } = useContext(AuthContext);
+export  function NewUserScreen() {
+
+  const { signIn } = useContext(ApplicationContext);
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -16,7 +17,6 @@ export default function NewUserScreen() {
     if (validateEmail(email)) {
       console.log('New User Valid')
       signIn({name, email})
-      console.log("SIGN IN NEW USER")
     } else {
       // not a valid email
       console.log('New User NOT VALID')

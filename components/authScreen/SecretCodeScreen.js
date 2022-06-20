@@ -1,13 +1,10 @@
 import React, { useState, useContext } from 'react'
 import {View, Button ,TextInput, StyleSheet } from 'react-native';
-import PhoneInput from 'react-native-phone-number-input';
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
 
-import AuthContext from '../../context'
-
-export default function SecretCodeScreen({navigation}) {
+function SecretCodeScreen({navigation}) {
   const [code, setCode] = useState('')
-  const { signUp } = useContext(AuthContext);
-
+  const { signUp } = useContext(ApplicationContext);
 
   const sendCode = () =>{
     if(code != 1234){
@@ -49,3 +46,5 @@ const styles = StyleSheet.create({
   },
   
 });
+
+export {SecretCodeScreen}

@@ -1,10 +1,14 @@
 import React from 'react'
 import { View, Text, Button } from 'react-native';
 
+import  AuthContext  from '../../context/context';
+
 
 function ScanValidScreen({ navigation ,route}) {
     /* 2. Get the param */
   const { guest }  = route.params;
+  const { CheckIn } = useContext(AuthContext);
+
 
   const checkInValidGuest = (guest) => {
    
@@ -28,4 +32,4 @@ function ScanValidScreen({ navigation ,route}) {
   )
 }
 
-export default ScanValidScreen
+export  {ScanValidScreen}

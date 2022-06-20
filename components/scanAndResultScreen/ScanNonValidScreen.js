@@ -10,4 +10,4 @@ function ScanNonValidScreen() {
   )
 }
 
-export default ScanNonValidScreen
+export  {ScanNonValidScreen}

@@ -1,14 +1,16 @@
 import React, {useState, useRef, useContext} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
-import  AuthContext  from '../../context';
+
+import {ApplicationContext} from '../../context/ApplicationContextProvider';
+
 
 
 const PhoneAuthScreen = ({navigation}) => {
   const [phoneNumber, setphoneNumber] = useState('');
   const phoneInput = useRef(null);
   
-const { signUpWithPoneNumber } = useContext(AuthContext);
+  const { signUpWithPoneNumber } = useContext(ApplicationContext);
 
 
 const buttonPress = () => {
@@ -62,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhoneAuthScreen;
+export {PhoneAuthScreen};
