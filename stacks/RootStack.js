@@ -10,6 +10,7 @@ const Stack = createNativeStackNavigator();
 
 function RootStack(){
     const { state } = useContext(ApplicationContext)
+    
 
     return(
         <Stack.Navigator>

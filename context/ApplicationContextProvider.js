@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import React,  { createContext, useReducer, useMemo } from 'react'
 import { userAuthReducer } from './reducers/userAuthReducer'
 
@@ -20,22 +19,19 @@ function ApplicationContextProvider({children}) {
           signInNewUser: async (data) => {
             dispatch({ type: 'SIGN_IN_NEW_USER', token: data  });
           },
-    
-          qrCodeValid: async (data) => {
-            dispatch({   });     
-          },
-          CheckIn : async (data) => {
-            dispatch({ });     
-          },
+
+          setGuestList: (data) => {
+            dispatch({ type: 'GUEST_LIST', guestList: data  });
+          }
+        
         }),[state]
       );
 
-      return (
-		<ApplicationContext.Provider value={{state, ...authContext}}>
-			{children}
-		</ApplicationContext.Provider>
-	);
-
+    return (
+      <ApplicationContext.Provider value={{state, ...authContext}}>
+        {children}
+      </ApplicationContext.Provider>
+  	);
 }
 
 

@@ -5,7 +5,6 @@ const userAuthReducer = (prevState = { } , action) => {
         return {
           ...prevState,
           userToken: action.token,
-          isLoading: false,
         };
       case SIGN_IN:
         return {
@@ -19,12 +18,13 @@ const userAuthReducer = (prevState = { } , action) => {
           isSignout: true,
           userToken: null,
         };
+      case 'GUEST_LIST':
+        return{
+          ...prevState,
+        eventGuests: action.guestList
+      };
       default: 
-        return {
-            isLoading: true,
-            isSignout: false,
-            userToken: null,
-        };
+        return { };
     }
 }
 

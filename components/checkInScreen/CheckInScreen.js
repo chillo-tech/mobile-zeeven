@@ -35,7 +35,7 @@ function CheckInScreen({ navigation ,route }) {
       
     }else if(!alreadyCheckIn(guest)){
       setGuestList(oldGuest => [...oldGuest, guest])
-    console.log(guestList)
+      console.log(guestList)
 
     }else{
       alert(`Cet invite a deja ete Check IN`);
@@ -64,9 +64,9 @@ return (
                         borderRadius: AVATAR_SIZE, marginRight : SPACING /2}}
               />
               <View>
-                  <Text>{item.name}</Text>
+                  <Text>{item.firstName}</Text>
                   <Text>{item.email}</Text>
-                  <Text>{item.telephone}</Text>
+                  <Text>{item.phone}</Text>
               </View>
             </View>
             

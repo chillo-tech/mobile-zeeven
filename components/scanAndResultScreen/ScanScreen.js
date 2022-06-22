@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useIsFocused } from '@react-navigation/native';
+
+
+import { ApplicationContext } from '../../context/ApplicationContextProvider';
 
 function ScanScreen({navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
- // console.log(hasPermission, scanned);
+  const {state} = useContext(ApplicationContext);
+  const { eventGuests } = state
+  
+
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -15,13 +21,16 @@ function ScanScreen({navigation}) {
       setScanned(false);
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
+      
     })();
-  }, []);
+  }, [state]);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    checkValidQR(formatJSon(data))
+    if(eventGuests){
+          checkValidQR(formatJSon(data).id)  
+    }
   };
 
   if (hasPermission === null) {
@@ -42,13 +51,15 @@ function ScanScreen({navigation}) {
     }
   }
 
-  const checkValidQR = (guest) => {   
+  const checkValidQR = (guestId) => {   
     try {
-      const validID = [ 1, 2, 3, 4]
-      let valid = (validID.includes(guest.id))
+      let valid = eventGuests.some((validGuestId) => JSON.parse(validGuestId).id  === guestId)
+      console.log(valid + " " + guestId )
 
       if(valid){
-        navigation.navigate("Scan_Valid", {guest})
+        //const guest = eventGuests.filter((guest) => word.length > 6);
+
+        navigation.navigate("Scan_Valid", {guestId})
       }else{
         navigation.navigate("Scan_Non_Valid")
       }      
@@ -57,6 +68,8 @@ function ScanScreen({navigation}) {
     }       
   }
 
+
+  
   return (
     <View style={styles.container}>
       {isFocused ? (
