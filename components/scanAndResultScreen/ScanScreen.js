@@ -57,8 +57,6 @@ function ScanScreen({navigation}) {
       console.log(valid + " " + guestId )
 
       if(valid){
-        //const guest = eventGuests.filter((guest) => word.length > 6);
-
         navigation.navigate("Scan_Valid", {guestId})
       }else{
         navigation.navigate("Scan_Non_Valid")
@@ -76,6 +74,7 @@ function ScanScreen({navigation}) {
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
+          
         />
       ) : null}
       {scanned && (

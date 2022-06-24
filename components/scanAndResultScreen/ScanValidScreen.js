@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button,StyleSheet } from 'react-native';
 
 
 import { ApplicationContext } from '../../context/ApplicationContextProvider';
@@ -29,8 +29,6 @@ function ScanValidScreen({ navigation ,route}) {
       screen: 'Invités',
       params: { guest: guest},
     });
-  
-  
   }
 
 
@@ -41,11 +39,22 @@ function ScanValidScreen({ navigation ,route}) {
 
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor : 'green'}}>
+    <View style={styles.container}>
+      <Text style={{ fontWeight: "bold", fontSize: 20}}>Information sur l'Invité</Text>
+      <View>
+        <Text style={styles.sectionTitle}>Liste des Prenoms </Text>
+        <Text  style={styles.userInfo}> {guest.firstName} </Text> 
+      </View>
       
-      <Text>First Name : {guest.firstName}</Text> 
-      <Text>Email : {guest.email}</Text>    
-      <Text>Phone : {guest.phone}</Text> 
+      <View>
+        <Text style={styles.sectionTitle}> Email </Text>
+        <Text  style={styles.userInfo}> {guest.email} </Text> 
+      </View>
+
+      <View>
+        <Text style={styles.sectionTitle}> Phone </Text>
+        <Text style={styles.userInfo}> {guest.phone} </Text> 
+      </View>
     
       <Button title='Check IN' onPress={() => checkInValidGuest()}/>
       
@@ -53,5 +62,37 @@ function ScanValidScreen({ navigation ,route}) {
 
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    
+    flex: 1,
+    flexDirection: 'column',
+    padding: 35,
+    justifyContent:'space-between',
+    paddingBottom: 400
+    /*
+    display: "flex",
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor : 'green',   
+    */
+     
+  },
+
+  userInfo:{
+    fontSize: 15
+
+  },
+
+  sectionTitle:{
+    color: "#006080",
+    fontWeight: "bold",
+    fontSize: 17
+  }
+
+
+});
 
 export  {ScanValidScreen}

@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from 'react'
+import React, { useState ,useEffect, useContext } from 'react'
 import { 
   View,
   Dimensions,
@@ -9,9 +9,10 @@ import {
   Easing,
   SafeAreaViewBase,
   SafeAreaView, 
-  Image
+  Image,
+  TouchableHighlight
 } from 'react-native';
-
+import {ApplicationContext} from '../../context/ApplicationContextProvider'
 
 const { width, height } = Dimensions.get('screen');
 const SPACING = 20;
@@ -20,6 +21,8 @@ const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 
 function CheckInScreen({ navigation ,route }) {
+
+  const { addGuest } = useContext(ApplicationContext);
 
   const [guestList, setGuestList] = useState([])
   var { guest } = route.params ? route.params : {guest : {id: -1}};
@@ -35,7 +38,7 @@ function CheckInScreen({ navigation ,route }) {
       
     }else if(!alreadyCheckIn(guest)){
       setGuestList(oldGuest => [...oldGuest, guest])
-      console.log(guestList)
+      addGuest(guestList.length)
 
     }else{
       alert(`Cet invite a deja ete Check IN`);
@@ -49,6 +52,10 @@ function CheckInScreen({ navigation ,route }) {
       return guestList.some(item => item.id === guestId)
   }
 
+const showGuestInfo = (guest) =>{
+  navigation.navigate("Guest_Profile", {guest})
+}
+
 return (
     <View style={{ flex: 1, backgroundColor: '#fff'}}> 
       <FlatList
@@ -56,25 +63,24 @@ return (
         keyExtractor={item => item.id}
         renderItem={({item, index}) => {
           return (
+            <TouchableHighlight onPress={() => showGuestInfo(item)}>
             <View style={{flexDirection: 'row'}}>
-              <Image 
-                source={require('../../images/imgJP.jpg')}
-                style={{width: AVATAR_SIZE, 
-                        height: AVATAR_SIZE, 
-                        borderRadius: AVATAR_SIZE, marginRight : SPACING /2}}
-              />
-              <View>
-                  <Text>{item.firstName}</Text>
-                  <Text>{item.email}</Text>
-                  <Text>{item.phone}</Text>
-              </View>
+                <Image 
+                  source={require('../../images/imgJP.jpg')}
+                  style={{width: AVATAR_SIZE, 
+                          height: AVATAR_SIZE, 
+                          borderRadius: AVATAR_SIZE, marginRight : SPACING /2}}
+                />
+                <View>
+                    <Text>{item.firstName}</Text>
+                    <Text>{item.email}</Text>
+                    <Text>{item.phone}</Text>
+                </View>
             </View>
-            
+            </TouchableHighlight>
           )
         }}
-      />
-       
-      
+      />      
     </View>
   )
 }

@@ -21,7 +21,13 @@ function ApplicationContextProvider({children}) {
           },
 
           setGuestList: (data) => {
-            dispatch({ type: 'GUEST_LIST', guestList: data  });
+            dispatch({ type: 'ADD_GUEST_LIST', guestList: data  });
+
+          },
+
+          addGuest: (data) => {                        
+            dispatch({ type: 'ADD_GUEST', numberCheckIn: data.length  });
+
           }
         
         }),[state]
