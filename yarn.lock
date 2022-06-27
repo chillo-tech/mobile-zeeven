@@ -6936,6 +6936,11 @@ react-async-hook@3.6.1:
   resolved "https://registry.yarnpkg.com/react-async-hook/-/react-async-hook-3.6.1.tgz#aed3e492d87319392865c83ed7cef3609e2a7fef"
   integrity sha512-YWBB2feVQF79t5u2raMPHlZ8975Jds+guCvkWVC4kRLDlSCouLsYpQm4DGSqPeHvoHYVVcDfqNayLZAXQmnxnw==
 
+react-checkmark@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-checkmark/-/react-checkmark-1.4.0.tgz#9b086f168024b90094ffddb77b3fa2d5f77a1dce"
+  integrity sha512-9ESId716ltic7qnvFrB2YicM1smryCfgvqSsYbCJuaWAYnuKMz22v+iubyx009UMxTjzGqVH7Zrf1DevoTVcPw==
+
 react-devtools-core@^4.23.0:
   version "4.24.6"
   resolved "https://registry.npmjs.org/react-devtools-core/-/react-devtools-core-4.24.6.tgz"

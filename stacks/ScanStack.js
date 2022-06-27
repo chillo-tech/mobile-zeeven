@@ -49,7 +49,7 @@ function Home() {
         <Tab.Screen 
               name="Invités" 
               options={{ 
-                tabBarBadge:  (numberCheckIn) ? numberCheckIn : 0 }}
+              tabBarBadge:  (numberCheckIn) ? numberCheckIn : 0 }}
               component={CheckInScreen} />
     </Tab.Navigator>
   );
@@ -59,8 +59,15 @@ function ScanStack(){
     return(
         <Stack.Navigator initialRouteName="Home">          
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-            <Stack.Screen name="Scan_Valid" component={ScanValidScreen} />
-            <Stack.Screen name="Scan_Non_Valid" component={ScanNonValidScreen} />
+            <Stack.Screen name="Scan_Valid" component={ScanValidScreen}
+              options={{ headerTitle: ""}} />
+            <Stack.Screen name="Scan_Non_Valid" component={ScanNonValidScreen}
+              options={{ headerTitle: "", 
+              headerRight: () => (
+                <Ionicons name="home-sharp" 
+                 
+                />
+              )}}/>
             <Stack.Screen name="Guest_Profile" component={GuestProfile} />
 
         </Stack.Navigator>

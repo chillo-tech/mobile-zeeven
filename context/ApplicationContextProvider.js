@@ -26,7 +26,7 @@ function ApplicationContextProvider({children}) {
           },
 
           addGuest: (data) => {                        
-            dispatch({ type: 'ADD_GUEST', numberCheckIn: data.length  });
+            dispatch({ type: 'ADD_GUEST', numberCheckIn: data  });
 
           }
         
@@ -39,6 +39,5 @@ function ApplicationContextProvider({children}) {
       </ApplicationContext.Provider>
   	);
 }
-
 
 export default ApplicationContextProvider;
