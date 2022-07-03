@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity, Platform, Dimensions   } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useIsFocused } from '@react-navigation/native';
 
+import Torch from 'react-native-torch';
+import {RNFlash} from 'react-native-flash';
+import { useTorchLight } from '@blackbox-vision/use-torch-light';
 
 import { ApplicationContext } from '../../context/ApplicationContextProvider';
 
@@ -10,9 +13,12 @@ function ScanScreen({navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
-  const {state} = useContext(ApplicationContext);
+  //Torch
+  const [isTorchOn, setIsTorchOn] = useState(false);
+
+  const {state} = useContext(ApplicationContext)
   const { eventGuests } = state
-  
+  const {width , height} = Dimensions.get('window')
 
   const isFocused = useIsFocused();
 
@@ -23,14 +29,21 @@ function ScanScreen({navigation}) {
       setHasPermission(status === 'granted');
       
     })();
-  }, [state]);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+   }, [state]);
+
+  const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     if(eventGuests){
           checkValidQR(formatJSon(data).id)  
     }
+    
+  };
+
+  const handleTorch = () => {
+   
+    
   };
 
   if (hasPermission === null) {
@@ -39,6 +52,7 @@ function ScanScreen({navigation}) {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
 
   //Mes fonctions
   const formatJSon = (qr_scan) =>{
@@ -54,7 +68,6 @@ function ScanScreen({navigation}) {
   const checkValidQR = (guestId) => {   
     try {
       let valid = eventGuests.some((validGuestId) => JSON.parse(validGuestId).id  === guestId)
-      console.log(valid + " " + guestId )
 
       if(valid){
         navigation.navigate("Scan_Valid", {guestId})
@@ -66,19 +79,20 @@ function ScanScreen({navigation}) {
     }       
   }
 
-
-  
   return (
     <View style={styles.container}>
       {isFocused ? (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-          
+          style={{
+            width: 700, height:800
+          }}         
         />
       ) : null}
       {scanned && (
-        <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
+        <>
+          <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
+         </>
       )}
     </View>
   );

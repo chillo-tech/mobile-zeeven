@@ -1,4 +1,4 @@
-import React, { useState ,useEffect, useContext } from 'react'
+import React, { useState ,useEffect } from 'react'
 import { 
   View,
   Dimensions,
@@ -22,7 +22,7 @@ const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 function CheckInScreen({ navigation ,route }) {
 
-  const { addGuest } = useContext(ApplicationContext);
+//  const { addGuest } = useContext(ApplicationContext);
 
   const [guestList, setGuestList] = useState([])
   var { guest } = route.params ? route.params : {guest : {id: -1}};
@@ -38,7 +38,7 @@ function CheckInScreen({ navigation ,route }) {
       
     }else if(!alreadyCheckIn(guest)){
       setGuestList(oldGuest => [...oldGuest, guest])
-      addGuest(guestList.length)
+  //    addGuest(guestList.length)
 
     }else{
       alert(`Cet invite a deja ete Check IN`);

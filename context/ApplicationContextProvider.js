@@ -20,16 +20,18 @@ function ApplicationContextProvider({children}) {
             dispatch({ type: 'SIGN_IN_NEW_USER', token: data  });
           },
 
-          setGuestList: (data) => {
-            dispatch({ type: 'ADD_GUEST_LIST', guestList: data  });
+
+          //Events Handlers 
+          setEvents: (data) => {
+            dispatch({ type: 'ADD_EVENTS', eventList: data  });
+          },
+
+          chooseEvent: (data) => {
+           dispatch({ type: 'ACTUAL_EVENT', eventActual: data,  eventGuests: data.guest  });
 
           },
 
-          addGuest: (data) => {                        
-            dispatch({ type: 'ADD_GUEST', numberCheckIn: data  });
-
-          }
-        
+     
         }),[state]
       );
 

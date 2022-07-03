@@ -1,4 +1,4 @@
-import { RESTORE_TOKEN , SIGN_IN, SIGN_OUT, ADD_GUEST_LIST} from '../../utils/actions/userActions'
+import { RESTORE_TOKEN , SIGN_IN, SIGN_OUT, ADD_EVENTS} from '../../utils/actions/userActions'
 const userAuthReducer = (prevState = { } , action) => {
     switch (action.type) {
       case RESTORE_TOKEN:
@@ -18,16 +18,19 @@ const userAuthReducer = (prevState = { } , action) => {
           isSignout: true,
           userToken: null,
         };
-      case ADD_GUEST_LIST:
+      case ADD_EVENTS:
         return{
           ...prevState,
-        eventGuests: action.guestList
+          eventList : action.eventList
       };
-      case 'ADD_GUEST':
+      case 'ACTUAL_EVENT':
         return{
           ...prevState,
-          numberCheckIn: action.numberCheckIn
+          eventActual : action.eventActual,
+          eventGuests : action.eventGuests,
       };
+      
+
       default: 
         return { };
     }

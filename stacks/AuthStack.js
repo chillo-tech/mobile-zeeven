@@ -9,7 +9,14 @@ function AuthStack(){
 
     return(
         <Stack.Navigator initialRouteName="Numero AUTH">
-            <Stack.Screen name="Numero AUTH" component={ PhoneAuthScreen } />
+            <Stack.Screen name="Numero AUTH" component={ PhoneAuthScreen }
+                        options={{ headerTitle: "",
+                        headerStyle: {
+                            backgroundColor: '#004aab',
+                          },
+                    }}
+                    
+            />
             <Stack.Screen name="Secret Code" component={ SecretCodeScreen } />
             <Stack.Screen name="New User"    component={ NewUserScreen } />
         </Stack.Navigator>
