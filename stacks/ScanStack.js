@@ -18,6 +18,7 @@ function Home() {
 
   const { state } = useContext(ApplicationContext)
   const guests = state.eventGuests
+  const checkIn = state.checkInGuests
 
 
   return (
@@ -67,7 +68,7 @@ function Home() {
               component={GuestList} />     
         <Tab.Screen name="Invités" 
               options={{ 
-              tabBarBadge:  0 }}
+              tabBarBadge:   checkIn ? checkIn.length : 0 }}
               component={CheckInScreen} />
 
         

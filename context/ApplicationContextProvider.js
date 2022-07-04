@@ -23,13 +23,24 @@ function ApplicationContextProvider({children}) {
 
           //Events Handlers 
           setEvents: (data) => {
-            dispatch({ type: 'ADD_EVENTS', eventList: data  });
+            dispatch({ type: 'ADD_EVENTS', eventList: data });
           },
 
           chooseEvent: (data) => {
-           dispatch({ type: 'ACTUAL_EVENT', eventActual: data,  eventGuests: data.guest  });
-
+            //On reininitialise le checkInList
+            if(state.eventActual != data){
+              state.checkInGuests = new Array()
+            }
+           dispatch({ type: 'ACTUAL_EVENT', eventActual: data,  eventGuests: data.guest, });
           },
+
+          checkIn: (data) => {
+            dispatch({ type: 'CHECKIN_GUESTS', checkInGuests: data  });
+          },
+
+          removeCheckInGuest: (data) => {
+            dispatch({ type: 'CHECKIN_GUESTS', checkInGuests: data  });
+           },
 
      
         }),[state]

@@ -8,10 +8,10 @@ import { ApplicationContext } from '../../context/ApplicationContextProvider';
 function ScanValidScreen({ navigation ,route}) {
     /* 2. Get the param */
 
-  const [guest, setGuest] = useState({})
+  const [guestValid, setGuestState] = useState({})
   const { state } = useContext(ApplicationContext);
   const { eventGuests } = state
-  const { guestId }  = route.params;
+  const { guest }  = route.params;
 
   
   useEffect(() => {
@@ -27,14 +27,14 @@ function ScanValidScreen({ navigation ,route}) {
 
      navigation.navigate('Home', { 
       screen: 'Invités',
-      params: { guest: guest},
+      params: { guest: guestValid},
     });
   }
 
 
   const getGuest = () =>{
-      const guest = eventGuests.filter((guest) =>  JSON.parse(guest).id === guestId);
-      setGuest(JSON.parse(guest))    
+      const guestadd = eventGuests.filter((validGuest) =>  validGuest.id === guest.id);
+      setGuestState(...guestadd)    
   }
 
   return (
@@ -44,8 +44,7 @@ function ScanValidScreen({ navigation ,route}) {
         style={{ height:28,
                 resizeMode: 'contain',
                 marginLeft:-90,
-                marginRight:-90,
-        
+                marginRight:-90,  
                 padding:-100
                 }}/>
         <Text style={styles.scanValideTitle}>Valide</Text>
@@ -56,22 +55,22 @@ function ScanValidScreen({ navigation ,route}) {
         <Text style={{ fontWeight: "bold", fontSize: 22,paddingBottom: 15 }}>Information sur l'Invité</Text>
         <View>
           <Text style={styles.sectionTitle}>Liste des Prenoms </Text>
-          <Text  style={styles.userInfo}> {guest.firstName} </Text> 
+          <Text  style={styles.userInfo}> {guestValid.firstName} </Text> 
         </View>
 
         <View>
           <Text style={styles.sectionTitle}>Nom</Text>
-          <Text  style={styles.userInfo}> {guest.lastName} </Text> 
+          <Text  style={styles.userInfo}> {guestValid.lastName} </Text> 
         </View>
         
         <View>
           <Text style={styles.sectionTitle}> Email </Text>
-          <Text  style={styles.userInfo}> {guest.email} </Text> 
+          <Text  style={styles.userInfo}> {guestValid.email} </Text> 
         </View>
 
         <View>
           <Text style={styles.sectionTitle}> Phone </Text>
-          <Text style={styles.userInfo}> {guest.phone} </Text> 
+          <Text style={styles.userInfo}> {guestValid.phone} </Text> 
         </View>
       
         <Button title='Check IN' onPress={() => checkInValidGuest()}/>
@@ -98,21 +97,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     shadowColor: 'red',    
   },
-
   userInfo:{
     fontSize: 18,
     color: "gray",
     paddingBottom: 20
 
   },
-
   sectionTitle:{
     color: "#006080",
     fontWeight: "bold",
     fontSize: 17, 
   }
-
-
 });
 
 export  {ScanValidScreen}

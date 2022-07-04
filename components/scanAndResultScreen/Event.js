@@ -24,7 +24,7 @@ function Event({event}) {
   return (
     <View style={styles.container}>
         <Pressable onPress={() => eventChoose(event)}>
-            <Text>{event.name}</Text> 
+            <Text style={styles.eventName}>{event.name}</Text> 
             <Text>{date}</Text> 
         </Pressable>
     </View>
@@ -37,13 +37,15 @@ const styles = StyleSheet.create({
     container: {
      paddingBottom:10,
      margin:20,
-
      borderRadius: 10,
-     paddingLeft: 80,
-     
      backgroundColor: "#004aab"
     },
 
+    eventName:{
+      fontSize: 15,
+      color: 'white',
+      fontWeight : 'bold'
+    }
   });
   
 

@@ -30,9 +30,18 @@ function GuestList() {
     return guest.lastName.toLowerCase().includes(nameSearch.toLowerCase())   || 
     guest.firstName.toLowerCase().includes(nameSearch.toLowerCase())   
   })
+
+  
   setGuestList(searchData)
  }
 
+ const searchEmpty = () => {
+  return (
+    <View style={{  flex: 1, justifyContent: "center", alignItems: "center"}}>
+      <Text>Cette personne n'est pas invitée</Text>
+    </View>
+  )
+ }
 
  const BG_IMG =''
  const SPACING = 20
@@ -100,8 +109,9 @@ function GuestList() {
       />
     </View>
     </>
-  : 
-  <View>
+     
+     :
+  <View >
     <Text> Aucun invites </Text>
   </View>
    

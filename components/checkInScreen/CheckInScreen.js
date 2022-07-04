@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from 'react'
+import React, { useState ,useEffect, useContext } from 'react'
 import { 
   View,
   Dimensions,
@@ -22,9 +22,9 @@ const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 function CheckInScreen({ navigation ,route }) {
 
-//  const { addGuest } = useContext(ApplicationContext);
+  const { checkIn, checkInGuests } = useContext(ApplicationContext);
 
-  const [guestList, setGuestList] = useState([])
+  const [checkInList, setCheckInList] = useState([])
   var { guest } = route.params ? route.params : {guest : {id: -1}};
 
 
@@ -37,29 +37,31 @@ function CheckInScreen({ navigation ,route }) {
     if(guest.id == -1){
       
     }else if(!alreadyCheckIn(guest)){
-      setGuestList(oldGuest => [...oldGuest, guest])
-  //    addGuest(guestList.length)
-
+      setCheckInList(checkInList => [...checkInList, guest])
+      checkIn([...checkInList, guest])
+ 
     }else{
       alert(`Cet invite a deja ete Check IN`);
     }
-    
+
   }, [guest]);
 
 
   const alreadyCheckIn = (guest) => {
       let guestId = guest.id;
-      return guestList.some(item => item.id === guestId)
+      return checkInList.some(item => item.id === guestId)
   }
 
 const showGuestInfo = (guest) =>{
   navigation.navigate("Guest_Profile", {guest})
 }
-
+ 
 return (
+
+  checkInList ? (
     <View style={{ flex: 1, backgroundColor: '#fff'}}> 
       <FlatList
-        data={guestList}
+        data={checkInList}
         keyExtractor={item => item.id}
         renderItem={({item, index}) => {
           return (
@@ -82,6 +84,11 @@ return (
         }}
       />      
     </View>
+    ): (
+      <View style={{  flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <Text>Aucun Invité est arrivée</Text>
+      </View>
+    ) 
   )
 }
 
@@ -90,11 +97,7 @@ const styles = StyleSheet.create({
    flex: 1,
    paddingTop: 22
   },
-  item: {
-    padding: 10,
-    fontSize: 20,
-    height: 55,
-  },
+  
   subtitleView: {
     flexDirection: 'row',
     paddingLeft: 10,

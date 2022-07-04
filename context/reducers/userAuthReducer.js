@@ -29,6 +29,12 @@ const userAuthReducer = (prevState = { } , action) => {
           eventActual : action.eventActual,
           eventGuests : action.eventGuests,
       };
+      case 'CHECKIN_GUESTS':
+        return{
+          ...prevState,
+          checkInGuests : action.checkInGuests
+      };
+      
       
 
       default: 

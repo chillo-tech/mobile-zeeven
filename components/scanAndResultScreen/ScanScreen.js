@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, View, StyleSheet, Button, TouchableOpacity, Platform, Dimensions   } from 'react-native';
+import { Text, View, StyleSheet, Alert , Button, TouchableOpacity, Platform, Dimensions,    } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -17,7 +17,7 @@ function ScanScreen({navigation}) {
   const [isTorchOn, setIsTorchOn] = useState(false);
 
   const {state} = useContext(ApplicationContext)
-  const { eventGuests } = state
+  const { eventGuests, eventActual, checkInGuests } = state
   const {width , height} = Dimensions.get('window')
 
   const isFocused = useIsFocused();
@@ -27,7 +27,6 @@ function ScanScreen({navigation}) {
       setScanned(false);
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-      
     })();
 
    }, [state]);
@@ -36,10 +35,34 @@ function ScanScreen({navigation}) {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     if(eventGuests){
-          checkValidQR(formatJSon(data).id)  
+         checkValidQR(formatJSon(data))  
+    }else{
+      console.log("Cet EVENT n'a pas d'invitee")
     }
-    
   };
+
+  const AlertAlreadyCheckIn = (guest) =>{
+    Alert.alert(
+      "Cet invité a deja Check IN",
+
+      "Voir le Profil", 
+      [
+        {
+          text: "YES", onPress: ()=>{
+            navigation.navigate("Guest_Profile", {guest})
+          }
+        },
+        {
+          text: "NO", onPress: ()=>{
+            console.log("click on NO")
+          }
+        }
+        
+      ]
+      
+    )
+  } 
+
 
   const handleTorch = () => {
    
@@ -65,21 +88,56 @@ function ScanScreen({navigation}) {
     }
   }
 
-  const checkValidQR = (guestId) => {   
+  const checkValidQR = (guest) => { 
     try {
-      let valid = eventGuests.some((validGuestId) => JSON.parse(validGuestId).id  === guestId)
+      let valid = false;
 
+      if(!checkValidEvent(guest)){ 
+        alert("Vous avez choisi le mauvais EVENT")
+      }else  if(!checkValidGuestID(guest)){
+        alert("Vous avez choisi le mauvais GUEST")
+      }else if(checkCheckIn(guest)){
+        AlertAlreadyCheckIn(guest)
+
+      } else{
+
+          navigation.navigate("Scan_Valid", {guest})
+      }
+
+      /*
       if(valid){
-        navigation.navigate("Scan_Valid", {guestId})
+      
       }else{
         navigation.navigate("Scan_Non_Valid")
-      }      
+      }     */ 
     } catch (error) {
       console.error("Erreur: " + error);
     }       
   }
 
+  const checkValidEvent = (guest) =>{
+    return eventActual.id == guest.event
+  }
+
+  const checkValidGuestID = (guest) =>{
+    return eventGuests.some((validGuestId) => validGuestId.id  === guest.id)
+  }
+
+  const checkCheckIn = (guest) =>{
+    if(checkInGuests){
+          return checkInGuests.some((guestCheckIn) => guestCheckIn.id  === guest.id)
+    }
+    return false    
+  }
+
+
   return (
+    !eventActual ? (
+      <View style={{  flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <Text> Veuillez Selectionner un EVENT</Text>
+      </View>
+    )
+     :
     <View style={styles.container}>
       {isFocused ? (
         <BarCodeScanner
