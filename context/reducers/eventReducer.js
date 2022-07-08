@@ -1,15 +1,27 @@
-const guestReducer = (prevState, action) => {
+import { ADD_EVENTS, ACTUAL_EVENT, CHECKIN_GUESTS } from '../../utils/actions/eventActions'
+
+const eventReducer = (prevState = { } , action) => {
     switch (action.type) {
-      case 'Guest_Check_IN':
+      case ADD_EVENTS:
         return {
-          
+          ...prevState,
+          eventList : action.eventList
         };
+      case ACTUAL_EVENT:
+        return {
+          ...prevState,
+          eventActual : action.eventActual,
+          eventGuests : action.eventGuests,
+      };
+      case CHECKIN_GUESTS:
+        return {
+          ...prevState,
+          checkInGuests : action.checkInGuests
+      };
       default: 
         return {
-            isLoading: true,
-            isSignout: false,
-            userToken: null,
+      //autoRemove
         }
     }
 }
-export {guestReducer}
+export {eventReducer}

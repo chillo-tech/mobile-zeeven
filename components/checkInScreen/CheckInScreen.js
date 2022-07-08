@@ -1,18 +1,17 @@
 import React, { useState ,useEffect, useContext } from 'react'
 import { 
-  View,
-  Dimensions,
-  StyleSheet, 
-  FlatList,
-  Text,
-  TouchableOpacity, 
+  View, Dimensions, StyleSheet, 
+  FlatList, Text,Image,
+  TouchableHighlight,  TouchableOpacity, 
   Easing,
   SafeAreaViewBase,
   SafeAreaView, 
-  Image,
-  TouchableHighlight
+  
 } from 'react-native';
-import {ApplicationContext} from '../../context/ApplicationContextProvider'
+
+import { DEFAULT_SCREEN_TEXT_VIEW, DEFAULT_SCREEN_VIEW  } from  '../../utils/constants'
+
+import { ApplicationContext } from '../../context/ApplicationContextProvider'
 
 const { width, height } = Dimensions.get('screen');
 const SPACING = 20;
@@ -32,7 +31,7 @@ function CheckInScreen({ navigation ,route }) {
     <Text>LIST empty</Text>
   }
     
-
+ 
   useEffect(() => {
     if(guest.id == -1){
       
@@ -52,44 +51,44 @@ function CheckInScreen({ navigation ,route }) {
       return checkInList.some(item => item.id === guestId)
   }
 
-const showGuestInfo = (guest) =>{
-  navigation.navigate("Guest_Profile", {guest})
-}
+  const showGuestInfo = (guest) =>{
+    navigation.navigate("Guest_Profile", {guest})
+  }
  
-return (
-
-  checkInList ? (
-    <View style={{ flex: 1, backgroundColor: '#fff'}}> 
-      <FlatList
-        data={checkInList}
-        keyExtractor={item => item.id}
-        renderItem={({item, index}) => {
-          return (
-            <TouchableHighlight onPress={() => showGuestInfo(item)}>
-            <View style={{flexDirection: 'row'}}>
-                <Image 
-                  source={require('../../images/imgJP.jpg')}
-                  style={{width: AVATAR_SIZE, 
-                          height: AVATAR_SIZE, 
-                          borderRadius: AVATAR_SIZE, marginRight : SPACING /2}}
-                />
-                <View>
-                    <Text>{item.firstName}</Text>
-                    <Text>{item.email}</Text>
-                    <Text>{item.phone}</Text>
-                </View>
-            </View>
-            </TouchableHighlight>
-          )
-        }}
-      />      
-    </View>
-    ): (
-      <View style={{  flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <Text>Aucun Invité est arrivée</Text>
+  return (
+  
+    (checkInList.length !== 0) ? (
+      <View style={{ flex: 1, backgroundColor: '#fff'}}> 
+        <FlatList
+          data={checkInList}
+          keyExtractor={item => item.id}
+          renderItem={({item, index}) => {
+            return (
+              <TouchableHighlight onPress={() => showGuestInfo(item)}>
+              <View style={{flexDirection: 'row'}}>
+                  <Image 
+                    source={require('../../images/imgJP.jpg')}
+                    style={{width: AVATAR_SIZE, 
+                            height: AVATAR_SIZE, 
+                            borderRadius: AVATAR_SIZE, marginRight : SPACING /2}}
+                  />
+                  <View>
+                      <Text>{item.firstName}</Text>
+                      <Text>{item.email}</Text>
+                      <Text>{item.phone}</Text>
+                  </View>
+              </View>
+              </TouchableHighlight>
+            )
+          }}
+        />      
       </View>
-    ) 
-  )
+      ): (
+        <View style={DEFAULT_SCREEN_VIEW}>
+          <Text  style={DEFAULT_SCREEN_TEXT_VIEW} >Aucun Invité est arrivée</Text>
+        </View>
+      ) 
+    )
 }
 
 const styles = StyleSheet.create({
@@ -102,6 +101,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 10,
     paddingTop: 5
+  },
+
+  defaultView: {
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+
+  defaultText:{
+    fontWeight: "bold", 
+    fontSize:25
   },
 });
 

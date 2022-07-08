@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, StyleSheet, Alert , Button, TouchableOpacity, Platform, Dimensions,    } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useIsFocused } from '@react-navigation/native';
+import { DEFAULT_SCREEN_TEXT_VIEW, DEFAULT_SCREEN_VIEW  } from  '../../utils/constants'
+
 
 import Torch from 'react-native-torch';
 import {RNFlash} from 'react-native-flash';
@@ -133,8 +135,8 @@ function ScanScreen({navigation}) {
 
   return (
     !eventActual ? (
-      <View style={{  flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <Text> Veuillez Selectionner un EVENT</Text>
+      <View style={DEFAULT_SCREEN_VIEW}>
+        <Text  style={DEFAULT_SCREEN_TEXT_VIEW}> Veuillez selectionner un EVENT</Text>
       </View>
     )
      :
@@ -176,6 +178,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     margin: 20,
   }, 
+
+  defaultView: {
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+
+  defaultText:{
+    fontWeight: "bold", 
+    fontSize:25
+  },
   
 });
 

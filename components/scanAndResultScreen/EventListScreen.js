@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Text, View,  StyleSheet} from 'react-native';
 
 import { ApplicationContext } from '../../context/ApplicationContextProvider';
@@ -9,6 +9,8 @@ function EventListScreen() {
 
   const { state } = useContext(ApplicationContext);
   const { eventList } = state;
+
+  
   
   return ( 
    <View>

@@ -13,7 +13,7 @@ function RootStack(){
     
 
     return(
-        <Stack.Navigator>
+        <Stack.Navigator> 
             { state.userToken ? (
                 <Stack.Screen 
                             name="Scan Screen" component={ScanStack} 

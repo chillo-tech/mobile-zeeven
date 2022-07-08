@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {StyleSheet} from 'react-native'
@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScanScreen, ScanValidScreen, ScanNonValidScreen, EventListScreen } from '../components/scanAndResultScreen';
 import { CheckInScreen, GuestProfile, GuestList } from '../components/checkInScreen';
 import { ApplicationContext } from '../context/ApplicationContextProvider';
+import { DropDown } from './dropdown';
 
 
 const Stack = createNativeStackNavigator();
@@ -16,7 +17,7 @@ const Tab = createBottomTabNavigator();
 
 function Home() {
 
-  const { state } = useContext(ApplicationContext)
+  const { state, signOut } = useContext(ApplicationContext)
   const guests = state.eventGuests
   const checkIn = state.checkInGuests
 
@@ -44,22 +45,26 @@ function Home() {
                 // You can return any component that you like here!
                 return <Ionicons name={iconName} size={size} color={color} />;
               },
-              tabBarStyle:{
-                ...styles.tabCustomStyle
-                
-              },
               
               tabBarActiveTintColor: '#004aab',
               tabBarInactiveTintColor: 'gray',
               
             })}      
           >
-        <Tab.Screen name="Events"  component={EventListScreen} />
+        <Tab.Screen 
+            name="Events"  
+            component={EventListScreen}  
+            options={{ headerTitle: "Events", 
+              headerRight: () => (
+                <DropDown
+                      
+                />
+              )}}         
+          />
         
         <Tab.Screen name="Scanner" component={ScanScreen} 
-              options={{
-                headerShown: false
-              }}/>
+            options={{ headerShown: false }}
+              />
 
          <Tab.Screen 
               name="Guest List" 
@@ -98,15 +103,7 @@ function ScanStack(){
 
 const styles = StyleSheet.create({
   tabCustomStyle : {
-    position: 'absolute',
-    bottom: 35,
-    left: 15,
-    right:15,
-    borderRadius:10,
-    height: 50,
-    elevation: 10,
-    backgroundColor: "#fff",
-    shadowColor: '#004aab',
+  
     
   }
  

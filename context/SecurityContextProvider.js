@@ -4,9 +4,6 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
-
-
-
 export const SecurityContext = createContext(null);
 
 function SecurityContextProvider({children}) {

@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   });
   
 
-export  {Event}
+export {Event}

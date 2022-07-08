@@ -1,11 +1,12 @@
 import React, {useState, useRef, useContext, useEffect} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Button} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 import { SecurityContext } from '../../context/SecurityContextProvider';
 import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { COLOR_BLUE, COLOR_WHITE, TEXT_WHITE } from '../../utils/constants';
 
 const PhoneAuthScreen = () => {
   const [phoneNumber, setphoneNumber] = useState('');
@@ -13,7 +14,7 @@ const PhoneAuthScreen = () => {
   var eventState =[]
   
   const { publicAxios } = useContext(SecurityContext);
-  const { signIn,  setEvents } = useContext(ApplicationContext);
+  const { signIn, setEvents } = useContext(ApplicationContext);
 
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const PhoneAuthScreen = () => {
         let guestList =  (response.data).map((guest) => guest.profile)
         guestList.forEach((guest) =>event.guest.push(guest))
         eventState.push(event)
-setEvents(eventState)
+        setEvents(eventState)
       })
      .catch((error) => {
          console.log('error ' + error);
@@ -87,87 +88,63 @@ setEvents(eventState)
 
 
   return (
-    <>  
+    <View style={styles.wrapper}>
+
       <View style={styles.secureText1}>
         <Text style={{fontSize:45, fontWeight: 'bold', color: "white"}}>Numéro de téléphone</Text>          
       </View>
 
-      <View style={styles.container}>
-        <PhoneInput
-          ref={phoneInput}
-          defaultValue={phoneNumber}
-          defaultCode="FR"
-          layout="first"
-          withShadow
-          autoFocus
-          containerStyle={styles.phoneContainer}
-          textContainerStyle={styles.textInput}
-          onChangeFormattedText={text => {
-            setphoneNumber(text);
-          }}
+      <View style={styles.inputWrapper}>
+        <PhoneInput type="text" style={{with: '100%', borderRadius: 20}} />
+        <Button 
+          style={styles.button} 
+          onPress={() => buttonPress()}
+          title="Envoyer"
         />
-        <Pressable style={styles.button} onPress={() => buttonPress()}>
-          <Text style={styles.continueText}>Envoyer</Text>
-        </Pressable>
+         
       </View>
 
-      <View style={styles.secureText2}>
-        <Ionicons name="lock-closed"  size={22} />
-        <Text style={{ color: "white"}}>
+        <Text style={TEXT_WHITE}>
               Ne t'en fais pas,  cette info n'apparaitra pas sur ton profile
               et ne sera partagée avec personne.
         </Text>
-      </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#004aab',
+ 
+  inputWrapper: {
+    flexDirection: 'column'
   },
-
   phoneContainer: {
-    width: '77%',
     height: 55,
-    borderRadius: 20,
-     paddingLeft:10
-
+    borderRadius: 10,
   },
   button: {
-    marginTop: 30,
-    width: '75%',
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'green',
+    marginTop: 10,
+    padding: 100,
+    textAlign: 'center',
+    backgroundColor: 'red',
   },
   
-  textInput: {
-    paddingVertical: 0,
-    borderRadius:20, 
-  },
+
 
   secureText1 : {
-    backgroundColor: '#004aab',
     fontSize:45, 
-    fontWeight: 'bold', 
-    color: "white",
-    paddingLeft:30,
-    paddingRight:50
+    fontWeight: 'bold'
   },
 
-  secureText2 : {
-    flexDirection: 'row',
-    backgroundColor: '#004aab',
-    paddingBottom:70,
-    paddingLeft:35,
-    paddingRight:55,
-    color: "white",
-
+ 
+  wrapper:{
+    flex:1,
+    justifyContent: 'space-between',
+    paddingLeft: 30,
+    paddingRight:30,
+    paddingTop: 40,
+    paddingBottom: 40,
+    backgroundColor: COLOR_BLUE,
+    color: COLOR_WHITE
   }
 
 });

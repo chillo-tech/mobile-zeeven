@@ -1,0 +1,3 @@
+export const ADD_EVENTS = "ADD_EVENTS"
+export const ACTUAL_EVENT = "ACTUAL_EVENT";
+export const CHECKIN_GUESTS = "CHECKIN_GUESTS"; 
