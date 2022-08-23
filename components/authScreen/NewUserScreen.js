@@ -1,27 +1,42 @@
 import React , { useState,  useContext } from 'react'
 import { Button,  TextInput, StyleSheet, View } from 'react-native';
-import {ApplicationContext} from '../../context/ApplicationContextProvider';
+import { SecurityContext } from "../../context/SecurityContextProvider";
 
 
-export  function NewUserScreen() {
+export  function NewUserScreen({ route, navigation }) {
+  const { phone, phoneIndex } = route.params;
+  const { publicAxios } = useContext(SecurityContext);
 
-  const { signIn } = useContext(ApplicationContext);
 
-  const [name, setName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
 
-  const submit = () => {
+  const addNewUser = async() => {
 
-    setEmail(email.trim())
-    if (validateEmail(email)) {
-      console.log('New User Valid')
-      signIn({name, email})
-    } else {
-      // not a valid email
-      console.log('New User NOT VALID')
+    setLastName(lastName.trim())
+    setFirstName(firstName.trim())
+    setEmail(email.trim().toLocaleLowerCase())
+    setPassword(password.trim)
 
+
+    try {
+      const { data } = await publicAxios.post("/inscription", {
+        firstName : firstName,
+        lastName : lastName,
+        email: email,
+        password: password,
+        phoneIndex: phoneIndex,
+        phone: phone
+      });
+
+      navigation.navigate("Numero AUTH");
+    } catch (error) {
+      console.log(JSON.stringify(error, null, 2));
     }
+    
   }
 
   const validateEmail = (email) => {
@@ -33,8 +48,14 @@ export  function NewUserScreen() {
     <View style={styles.container}>
       <TextInput  style={styles.container}
         placeholder='Entrer nom'
-        onChangeText={setName}
-        value={name}
+        onChangeText={setFirstName}
+        value={firstName}
+      />
+
+      <TextInput  style={styles.container}
+        placeholder='Entrer prénom'
+        onChangeText={setLastName}
+        value={lastName}
       />
 
       <TextInput  style={styles.container}
@@ -42,7 +63,13 @@ export  function NewUserScreen() {
         onChangeText={setEmail}
         value={email}
       />
-      <Button title='submit' onPress={submit}/>
+
+      <TextInput  style={styles.container}
+        placeholder='Entrer un mot de passe'
+        onChangeText={setPassword}
+        value={password}
+      />
+      <Button title='submit' onPress={addNewUser}/>
     </View>
   )
 }
@@ -50,15 +77,8 @@ export  function NewUserScreen() {
 const styles = StyleSheet.create({
   container: {
     margin: 30,
-    marginTop:100,
     
 
-  },
-  textInput: {
-    borderWidth: 2,
-    borderColor: 'blue',
-    flex:1
-    
   },
   
 });

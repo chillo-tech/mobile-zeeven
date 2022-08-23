@@ -9,7 +9,14 @@ export const SecurityContext = createContext(null);
 function SecurityContextProvider({children}) {
 	const { signIn, signOut} = useContext(ApplicationContext);
 	
-
+ 
+	const publicAxios = axios.create({
+		baseURL: `http://192.168.1.56:8087/api`,
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+	});  
 
 	const protectedAxios = axios.create({
 		baseURL: `http/localhost:8087/api`,
@@ -20,13 +27,7 @@ function SecurityContextProvider({children}) {
 		
 	});
 	
-	const publicAxios = axios.create({
-		baseURL: `http://192.168.1.56:8087/api`,
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-	});  	
+		
 
 	protectedAxios.interceptors.request.use(
 		(config = {}) => {

@@ -18,3 +18,5 @@ export const DEFAULT_SCREEN_TEXT_VIEW = {
   fontWeight: "bold", 
   fontSize:25
 }
+
+export const DEFAULT_PADDING = 20

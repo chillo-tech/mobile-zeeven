@@ -7,7 +7,7 @@ import { ApplicationContext } from '../context/ApplicationContextProvider';
 
 
 function DropDown() {
-  const { signOut} = useContext(ApplicationContext)
+  const { signOut, removeActualEvent  } = useContext(ApplicationContext)
   const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false);
@@ -17,22 +17,23 @@ function DropDown() {
     <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
       <Menu
         visible={visible}
-        anchor={<Ionicons 
+        anchor={
+          <Ionicons 
                     name="ellipsis-vertical-outline" 
                     size={20}
                     onPress={showMenu}
                     style={{paddingRight:15}}
-                />} 
+                />
+        } 
         onRequestClose={hideMenu}
       >       
-        <MenuItem onPress={hideMenu}>Actualiser Events</MenuItem>
+        <MenuItem onPress={hideMenu}>Actualiser Liste</MenuItem>
         <MenuDivider />
-        <MenuItem onPress={signOut}>
-        
-          Sign Out
-          </MenuItem>
+        <MenuItem onPress={removeActualEvent}>Liste d'evenements</MenuItem>
         <MenuDivider />
         <MenuItem disabled>Disabled item</MenuItem>
+        <MenuDivider />
+        <MenuItem onPress={signOut}> Déconnecté(e) </MenuItem>
       </Menu>
     </View>
   );

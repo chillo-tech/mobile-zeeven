@@ -28,17 +28,18 @@ function Home() {
               tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
 
+                //Handle Icons
                 if (route.name === 'Scanner') {
                   iconName = focused
                     ? 'qr-code-outline'
                     : 'qr-code-sharp';
-                } else if (route.name === 'Invités') {
+                } else if (route.name === 'Check-IN') {
                   iconName = focused ? 'people-outline' : 'people-circle-outline';
 
                 } else if (route.name === 'Events') {
                   iconName = focused ? 'school-outline' : 'school';
 
-                } else if (route.name === 'Guest List') {
+                } else if (route.name === 'Invités') {
                   iconName = focused ? 'document-text-outline' : 'document-text';
                 }
 
@@ -51,27 +52,37 @@ function Home() {
               
             })}      
           >
-        <Tab.Screen 
+            {/*
+              <Tab.Screen 
             name="Events"  
             component={EventListScreen}  
             options={{ headerTitle: "Events", 
               headerRight: () => (
                 <DropDown
-                      
                 />
               )}}         
           />
+          */
+            }
         
-        <Tab.Screen name="Scanner" component={ScanScreen} 
-            options={{ headerShown: false }}
-              />
-
-         <Tab.Screen 
-              name="Guest List" 
+        
+        <Tab.Screen 
+              name="Invités" 
               options={{ 
-              tabBarBadge:  guests ? guests.length : 0 }}
-              component={GuestList} />     
-        <Tab.Screen name="Invités" 
+              tabBarBadge:  guests ? guests.length : 0 , 
+              headerRight: () => (<DropDown/>)
+            }}
+              component={GuestList} 
+              
+              
+              />   
+
+        <Tab.Screen 
+            name="Scanner" 
+            component={ScanScreen} 
+            options={{ headerShown: false }}/>
+
+        <Tab.Screen name="Check-IN" 
               options={{ 
               tabBarBadge:   checkIn ? checkIn.length : 0 }}
               component={CheckInScreen} />
@@ -81,10 +92,10 @@ function Home() {
   );
 }
 
-function ScanStack(){
- // navigator.setOptions({tabBarVisible: false})
+function ScanStack({navigation}){
     return(
-        <Stack.Navigator initialRouteName="Home">          
+        <Stack.Navigator initialRouteName="EventList">  
+            <Stack.Screen name="EventList" component={EventListScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
             <Stack.Screen name="Scan_Valid" component={ScanValidScreen}
               options={{ headerTitle: ""}} />
@@ -102,11 +113,7 @@ function ScanStack(){
 }
 
 const styles = StyleSheet.create({
-  tabCustomStyle : {
   
-    
-  }
- 
   
 });
 

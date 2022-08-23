@@ -1,4 +1,4 @@
-import { ADD_EVENTS, ACTUAL_EVENT, CHECKIN_GUESTS } from '../../utils/actions/eventActions'
+import { ADD_EVENTS, ACTUAL_EVENT, REMOVE_ACTUAL_EVENT,CHECKIN_GUESTS } from '../../utils/actions/eventActions'
 
 const eventReducer = (prevState = { } , action) => {
     switch (action.type) {
@@ -12,6 +12,12 @@ const eventReducer = (prevState = { } , action) => {
           ...prevState,
           eventActual : action.eventActual,
           eventGuests : action.eventGuests,
+      };
+      case REMOVE_ACTUAL_EVENT:
+        return {
+          ...prevState,
+          eventActual : undefined ,
+          eventGuests : undefined ,
       };
       case CHECKIN_GUESTS:
         return {

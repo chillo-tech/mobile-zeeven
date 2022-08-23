@@ -15,8 +15,6 @@ function EventContextProvider({children}){
 
           //Events Handlers       
           setEvents: (data) => {
-            console.log('new etape')
-            console.log(state)
             dispatch({ type: ADD_EVENTS, eventList: data });
           },
 

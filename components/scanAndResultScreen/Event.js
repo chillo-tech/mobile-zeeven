@@ -1,52 +1,44 @@
-import React, { useContext} from 'react'
-import {StyleSheet, View, Text, Pressable } from 'react-native'
+import React, { useContext } from 'react'
+import {StyleSheet, View, Text, Pressable, Alert} from 'react-native'
 
 import { ApplicationContext } from '../../context/ApplicationContextProvider';
+import { formatDate } from '../../services/utils/date-format';
+import { COLOR_BLUE, DEFAULT_PADDING } from '../../utils/constants';
 
-function Event({event}) {
+function Event({navigation, event}) {
 
-    const { chooseEvent  } = useContext(ApplicationContext);
-    
-    const eventChoose= (event) =>{
-      chooseEvent(event)
-    }
+  const { chooseEvent  } = useContext(ApplicationContext);
+  const displayEvent= (event) =>{
+    chooseEvent(event)
+    navigation.navigate('Home')
+  }
 
-    const setDate = (eventDate) => {
-        let date = new Date(eventDate)
-        date = date.toLocaleString('fr-FR', {day:'numeric', month: 'long', year:'numeric'})
-        return date;
-    }
-
-
-    const date = setDate(event.date)
-    
 
   return (
     <View style={styles.container}>
-        <Pressable onPress={() => eventChoose(event)}>
+        <Pressable onPress={() => displayEvent(event)}>
             <Text style={styles.eventName}>{event.name}</Text> 
-            <Text>{date}</Text> 
+            <Text>{formatDate(event.date)}</Text> 
         </Pressable>
     </View>
   )
 }
 
 
-
 const styles = StyleSheet.create({
-    container: {
-     paddingBottom:10,
-     margin:20,
-     borderRadius: 10,
-     backgroundColor: "#004aab"
-    },
+  container: {
+   padding: DEFAULT_PADDING,
+   marginBottom:20,
+   borderRadius: 10,
+   backgroundColor: '#F5FEFD',
+   borderBottomWidth: 5,
+   borderColor: COLOR_BLUE
+  },
 
-    eventName:{
-      fontSize: 15,
-      color: 'white',
-      fontWeight : 'bold'
-    }
-  });
-  
-
+  eventName:{
+    fontSize: 15,
+    fontWeight : 'bold',
+    marginBottom: 8
+  }
+});
 export {Event}

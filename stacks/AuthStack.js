@@ -5,7 +5,7 @@ import { PhoneAuthScreen, NewUserScreen, SecretCodeScreen } from '../components/
 
 const Stack = createNativeStackNavigator();
 
-function AuthStack(){
+function AuthStack({navigation}){
 
     return(
         <Stack.Navigator initialRouteName="Numero AUTH">

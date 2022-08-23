@@ -1,43 +1,56 @@
-import { RESTORE_TOKEN , SIGN_IN, SIGN_OUT } from '../../utils/actions/userActions'
-import { ADD_EVENTS, ACTUAL_EVENT, CHECKIN_GUESTS } from '../../utils/actions/eventActions'
+import {
+  RESTORE_TOKEN,
+  SIGN_IN,
+  SIGN_OUT,
+} from "../../utils/actions/userActions";
+import {
+  ADD_EVENTS,
+  ACTUAL_EVENT,
+  CHECKIN_GUEST,
+  UPDATE_EVENT,
+} from "../../utils/actions/eventActions";
 
-const userAuthReducer = (prevState = { } , action) => {
-    switch (action.type) {
-      case RESTORE_TOKEN:
-        return {
-          ...prevState,
-          userToken: action.token,
-        };
-      case SIGN_IN:
-        return {
-          ...prevState,
-          isSignout: false,
-          userToken: action.token,
-        };
-      case SIGN_OUT:
-        return {
-          
-        };
-      case ADD_EVENTS:
-        return{
-          ...prevState,
-          eventList : action.eventList
+const userAuthReducer = (prevState = {}, action) => {
+  switch (action.type) {
+    case RESTORE_TOKEN:
+      return {
+        ...prevState,
+        userToken: action.token,
       };
-      case ACTUAL_EVENT:
-        return{
-          ...prevState,
-          eventActual : action.eventActual,
-          eventGuests : action.eventGuests,
+    case SIGN_IN:
+      return {
+        ...prevState,
+        isSignout: false,
+        userToken: action.token,
       };
-      case CHECKIN_GUESTS:
-        return{
-          ...prevState,
-          checkInGuests : action.checkInGuests
+    case SIGN_OUT:
+      return {};
+    case ADD_EVENTS:
+      return {
+        ...prevState,
+        eventList: action.eventList,
+      };
+    case ACTUAL_EVENT:
+      return {
+        ...prevState,
+        eventActual: action.eventActual,
+        eventGuests: action.eventGuests,
       };
 
-      default: 
-        return { };
-    }
-}
+    case UPDATE_EVENT:
+      return {
+        ...prevState,
+        eventGuests: action.eventGuests,
+      };
+    case CHECKIN_GUEST:
+      return {
+        ...prevState,
+        checkInGuests: action.checkInGuests,
+      };
 
-export  {userAuthReducer};
+    default:
+      return {};
+  }
+};
+
+export { userAuthReducer };

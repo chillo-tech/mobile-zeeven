@@ -1,3 +1,6 @@
-export const ADD_EVENTS = "ADD_EVENTS"
-export const ACTUAL_EVENT = "ACTUAL_EVENT";
-export const CHECKIN_GUESTS = "CHECKIN_GUESTS"; 
+export const ADD_EVENTS    = "ADD_EVENTS"
+export const ACTUAL_EVENT  = "ACTUAL_EVENT"
+export const REMOVE_ACTUAL_EVENT = "REMOVE_ACTUAL_EVENT"
+
+export const CHECKIN_GUEST = "CHECKIN_GUEST" 
+export const UPDATE_EVENT  = "UPDATE_EVENT"
